@@ -1,9 +1,10 @@
 node default {
-  include drupalstack::nginx
-  include drupalstack::php
-  include drupalstack::drupalcore
-  include drupalstack::drupalapp
-  include drupalstack::mysql
+  include  pustakalaya::installdocker
+  include apt
+  include  pustakalaya::pull
+  include  pustakalaya::dockernet	
+  include  pustakalaya::run	
+
+  
 
 }
-

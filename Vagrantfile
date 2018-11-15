@@ -7,8 +7,8 @@ VAGRANTFILE_API_VERSION = "2"
 SUBNET="10.10.10"
 DOMAIN="vm.local"
 
-MASTERNAME="puppetmaster"
-MASTERIP="#{SUBNET}.2"
+MASTERNAME="pustakalaya"
+MASTERIP="#{SUBNET}.4"
 
 CPUS=2
 MEMORY=2048
@@ -22,12 +22,14 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "#{MASTERNAME}.#{DOMAIN}"
   config.vm.network :private_network, ip: "#{MASTERIP}" 
   config.vm.network "forwarded_port", guest: 80, host: 8084
+  config.vm.synced_folder "/library", "/library"
   ####### Install Puppet Agent #######
   config.vm.provision "shell", path: "bootstrap.sh"
+#  config.vm.provision "shell", path: "copy_config.sh"
   config.vm.provision "shell", path: "install-puppet-modules.sh"
   ####### Provision #######
   config.vm.provision "puppet" do |puppet|
     puppet.module_path = "./site"
-    # puppet.options = "--verbose --debug"
+    puppet.options = "--verbose --debug"
   end
 end

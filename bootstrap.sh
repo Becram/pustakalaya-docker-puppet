@@ -1,6 +1,21 @@
 #!/bin/sh
+#echo "
+#deb http://np.archive.ubuntu.com/ubuntu/ xenial main restricted
+#deb http://np.archive.ubuntu.com/ubuntu/ xenial-updates main restricted
+#
+#deb http://np.archive.ubuntu.com/ubuntu/ xenial universe
+#deb http://np.archive.ubuntu.com/ubuntu/ xenial-updates universe
+#
+#" > /etc/apt/sources.list
+#apt-get clean
+#rm -r /var/lib/apt/lists/*
+
 echo "nameserver 8.8.8.8" > /etc/resolv.conf
 command -v puppet > /dev/null && { echo "Puppet is installed! skipping" ; exit 0; }
+
+
+#memory extension for elaticsearch
+sysctl -w vm.max_map_count=262144
 
 ID=$(cat /etc/os-release | awk -F= '/^ID=/{print $2}' | tr -d '"')
 VERS=$(cat /etc/os-release | awk -F= '/^VERSION_ID=/{print $2}' | tr -d '"')
